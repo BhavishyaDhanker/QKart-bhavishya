@@ -1,0 +1,5 @@
+<resources>
+    <string name="app_name">Q-Kart</string>
+    <string name="mixedText">Don\'t have an account?  <b>Register</b></string>
+    <string name="mixedText2">Already have an account ? <b>Sign In</b></string>
+</resources>

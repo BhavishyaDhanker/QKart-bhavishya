@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "124745775448",
+    "project_id": "qkart-bhavishya",
+    "storage_bucket": "qkart-bhavishya.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:124745775448:android:1994fcacafe0bbcaf78d2d",
+        "android_client_info": {
+          "package_name": "com.example.qkart_bhavishya"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBVOg-wXD3VlP1ERfzFughGC0xKe1LoiTc"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

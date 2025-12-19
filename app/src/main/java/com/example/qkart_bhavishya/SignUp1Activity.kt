@@ -6,10 +6,8 @@ import android.widget.TextView
 import android.widget.Toast
 import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
-import androidx.cardview.widget.CardView
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
-//import com.example.wocq_kart.SignupActivity
 import com.example.wocq_kart.User
 import com.google.android.material.textfield.TextInputEditText
 import com.google.firebase.database.DatabaseReference
@@ -20,10 +18,9 @@ class SignUp1Activity : AppCompatActivity() {
     lateinit var database: DatabaseReference
 
     companion object {
-        const val Key1 = "com.example.wocq_kart.SignUp1Activity.username"
-        const val Key2 = "com.example.wocq_kart.SignUp1Activity.rollNo"
+        const val Key1 = "com.example.qkart_bhavishya.SignUp1Activity.username"
+        const val Key2 = "com.example.qkart_bhavishya.SignUp1Activity.rollNo"
     }
-
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -35,18 +32,11 @@ class SignUp1Activity : AppCompatActivity() {
             insets
         }
 
-
-        val signUp = findViewById<CardView>(R.id.signUp)
+        val signUp = findViewById<TextView>(R.id.signUp)
         val signin = findViewById<TextView>(R.id.signin)
         val SUusername = findViewById<TextInputEditText>(R.id.SUusername)
         val SUroll = findViewById<TextInputEditText>(R.id.SUroll)
         val SUpass = findViewById<TextInputEditText>(R.id.SUpass)
-
-
-        val username = SUusername.text.toString()
-        val rollNo = SUroll.text.toString()
-        val pass = SUpass.text.toString()
-
 
         signin.setOnClickListener {
             val signInIntent = Intent(this, SignIn1Activity::class.java)
@@ -54,21 +44,30 @@ class SignUp1Activity : AppCompatActivity() {
         }
 
         signUp.setOnClickListener {
+            val username = SUusername.text.toString()
+            val rollNo = SUroll.text.toString()
+            val pass = SUpass.text.toString()
 
-            val user = User(username, rollNo, pass)
-            database = FirebaseDatabase.getInstance().getReference("Users")
-            database.child(username).setValue(user).addOnSuccessListener {
-                Toast.makeText(this, "User Registered", Toast.LENGTH_SHORT).show()
-                SUusername.text?.clear()
-                SUroll.text?.clear()
-                SUpass.text?.clear()
+            if (username.isNotEmpty() && rollNo.isNotEmpty() && pass.isNotEmpty()) {
+                val user = User(username, rollNo, pass, "student")
+                database = FirebaseDatabase.getInstance().getReference("Users")
 
-                val mainsignup = Intent(this, MainScreenActivity::class.java)
-                mainsignup.putExtra(Key1, username)
-                mainsignup.putExtra(Key2, rollNo)
-                startActivity(mainsignup)
-            }.addOnFailureListener {
-                Toast.makeText(this, "Error user not registered", Toast.LENGTH_SHORT).show()
+                database.child(username).setValue(user).addOnSuccessListener {
+                    Toast.makeText(this, "User Registered", Toast.LENGTH_SHORT).show()
+                    SUusername.text?.clear()
+                    SUroll.text?.clear()
+                    SUpass.text?.clear()
+
+                    val mainsignup = Intent(this, MainScreenActivity::class.java)
+                    mainsignup.putExtra(Key1, username)
+                    mainsignup.putExtra(Key2, rollNo)
+                    startActivity(mainsignup)
+                    finish()
+                }.addOnFailureListener {
+                    Toast.makeText(this, "Error user not registered", Toast.LENGTH_SHORT).show()
+                }
+            } else {
+                Toast.makeText(this, "Please fill all fields", Toast.LENGTH_SHORT).show()
             }
         }
     }

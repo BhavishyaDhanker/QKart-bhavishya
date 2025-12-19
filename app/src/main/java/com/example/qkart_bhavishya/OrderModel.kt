@@ -1,0 +1,18 @@
+package com.example.qkart_bhavishya
+
+data class OrderModel(
+    val orderId: String = "",
+    val username: String = "",       // The name the student signed up with
+    val rollNo: String = "",         // The IIT Dhanbad Roll Number
+    val items: List<CartItem> = listOf(),
+    val totalAmount: Double = 0.0,
+    val status: String = "Pending",  // Pending, Preparing, Ready, Completed
+    val timestamp: Long = System.currentTimeMillis(),
+    val pickupTime: String = ""
+)
+
+data class CartItem(
+    val itemName: String = "",
+    val quantity: Int = 0,
+    val price: Double = 0.0
+)

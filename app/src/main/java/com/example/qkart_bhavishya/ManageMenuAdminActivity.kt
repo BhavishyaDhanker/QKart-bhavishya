@@ -8,6 +8,7 @@ import android.widget.TextView
 import android.widget.Toast
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
+import androidx.recyclerview.widget.RecyclerView
 
 class ManageMenuAdminActivity : AppCompatActivity() {
 
@@ -26,10 +27,27 @@ class ManageMenuAdminActivity : AppCompatActivity() {
             finish()
         }
 
-        // 2. Button to trigger the Add Dialog
+
         val btnUpdateMenu = findViewById<androidx.cardview.widget.CardView>(R.id.btnUpdateMenu)
         btnUpdateMenu.setOnClickListener {
             showAddItemDialog()
+        }
+
+
+
+        // 1. Setup RecyclerView
+        val recyclerView = findViewById<RecyclerView>(R.id.rvmenu)
+        recyclerView.layoutManager = androidx.recyclerview.widget.LinearLayoutManager(this)
+
+// 2. Initialize the AdminMenuAdapter
+// Note: We pass 'helper' here so the Adapter can handle the switch toggles internally
+        val adapter = AdminMenuAdapter(emptyList(), helper)
+        recyclerView.adapter = adapter
+
+// 3. Real-time Listener for the Menu
+        helper.getMenu { items ->
+            // This updates the Admin list whenever you add a new item or change a switch
+            adapter.updateList(items)
         }
     }
 
@@ -79,5 +97,7 @@ class ManageMenuAdminActivity : AppCompatActivity() {
 
         builder.setNegativeButton("Cancel", null)
         builder.show()
+
+        etName.requestFocus()
     }
 }

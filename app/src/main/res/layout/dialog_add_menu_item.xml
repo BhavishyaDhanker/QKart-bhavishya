@@ -19,25 +19,28 @@
         android:id="@+id/etItemName"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:inputType="textCapWords"
         android:hint="Item Name (e.g. Samosa)"/>
 
     <EditText
         android:id="@+id/etItemPrice"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:hint="Price (e.g. 15)"
-        android:inputType="number"/>
+        android:inputType="number"
+        android:hint="Price (e.g. ₹15)" />
 
     <EditText
         android:id="@+id/etItemDesc"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:inputType="textCapSentences"
         android:hint="Description (e.g. Crispy Aloo)"/>
 
     <EditText
         android:id="@+id/etItemCategory"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:inputType="textCapWords"
         android:hint="Category (Snacks, Drinks, etc.)"/>
 
 </LinearLayout>

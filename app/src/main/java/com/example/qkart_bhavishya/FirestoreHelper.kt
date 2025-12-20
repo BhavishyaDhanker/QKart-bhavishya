@@ -47,12 +47,14 @@ class FirestoreHelper {
 
     fun addMenuItem(item: MenuItem, onComplete: (Boolean) -> Unit) {
         val newDocRef = db.collection("menu").document()
-        val itemWithId = item.copy(id = newDocRef.id)
-        newDocRef.set(itemWithId)
+        item.id = newDocRef.id
+        item.isAvailable = true
+        newDocRef.set(item)
             .addOnSuccessListener {
                 onComplete(true)
             }
-            .addOnFailureListener {
+            .addOnFailureListener { e ->
+                android.util.Log.e("FIRESTORE", "Error adding: ${e.message}")
                 onComplete(false)
             }
     }
@@ -62,6 +64,23 @@ class FirestoreHelper {
             .update("isAvailable", isAvailable)
             .addOnSuccessListener { onComplete(true) }
             .addOnFailureListener { onComplete(false) }
+    }
+
+    fun getMenu(onResult: (List<MenuItem>) -> Unit) {
+        db.collection("menu")
+            .addSnapshotListener { value, error ->
+                if (error != null) {
+                    return@addSnapshotListener
+                }
+
+                val items = mutableListOf<MenuItem>()
+                for (doc in value!!) {
+                    // This converts the Firestore document into your MenuItem object
+                    val item = doc.toObject(MenuItem::class.java)
+                    items.add(item)
+                }
+                onResult(items)
+            }
     }
 
 }

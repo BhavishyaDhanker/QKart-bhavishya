@@ -75,6 +75,7 @@
             android:layout_height="wrap_content"
             android:paddingStart="42dp"
             android:id="@+id/SUpass"
+            android:inputType="textPassword"
             android:hint="Password"
             />
     </com.google.android.material.textfield.TextInputLayout>

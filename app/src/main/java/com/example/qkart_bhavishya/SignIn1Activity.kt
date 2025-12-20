@@ -37,6 +37,7 @@ class SignIn1Activity : AppCompatActivity() {
         val signup = findViewById<TextView>(R.id.signup)
         signup.setOnClickListener {
             startActivity(Intent(this, SignUp1Activity::class.java))
+            finish()
         }
 
         val signIn = findViewById<TextView>(R.id.signIn)
@@ -77,8 +78,9 @@ class SignIn1Activity : AppCompatActivity() {
                             intent.putExtra(Key1, user)
                             intent.putExtra(Key2, rollNo)
                             startActivity(intent)
+                            finish()
                         }
-                        finish()
+
 
                     } else {
                         Toast.makeText(this, "Invalid username or password", Toast.LENGTH_SHORT).show()

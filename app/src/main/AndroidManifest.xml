@@ -20,6 +20,12 @@
         android:theme="@style/Theme.QKart_bhavishya">
         <activity
             android:name=".ManageMenuAdminActivity"
+            android:exported="false" />
+        <activity
+            android:name=".LiveOrdersAdminActivity"
+            android:exported="false" />
+        <activity
+            android:name=".SignUp1Activity"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -27,12 +33,6 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity
-            android:name=".LiveOrdersAdminActivity"
-            android:exported="false" />
-        <activity
-            android:name=".SignUp1Activity"
-            android:exported="false"/>
         <activity
             android:name=".SignIn1Activity"
             android:exported="false" />

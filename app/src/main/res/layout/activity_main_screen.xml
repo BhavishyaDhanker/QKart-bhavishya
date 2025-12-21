@@ -21,8 +21,10 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="QKART Canteen"
+
             android:textColor="@android:color/white"
             android:textSize="22sp"
+            android:id="@+id/mainHeading"
             android:textStyle="bold"
             android:layout_centerVertical="true"/>
 
@@ -33,7 +35,10 @@
             android:layout_alignParentEnd="true"
             android:layout_centerVertical="true"
             android:src="@drawable/ic_cart_24"
-            app:tint="@android:color/white" />
+            app:tint="@android:color/white"
+            android:clickable="true"
+            android:focusable="true"
+            android:background="?attr/selectableItemBackgroundBorderless"  />
     </RelativeLayout>
 
     <androidx.recyclerview.widget.RecyclerView
@@ -56,8 +61,10 @@
         android:padding="8dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/rvCategories"
+        app:layout_constraintVertical_bias="1.0"
         tools:listitem="@layout/item_menu_student" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -8,7 +8,7 @@
     android:layout_margin="6dp"
     app:cardCornerRadius="20dp"
     app:cardElevation="2dp"
-    app:cardBackgroundColor="#FFF7FF">
+    >
 
     <TextView
         android:id="@+id/tvCategoryName"
@@ -16,7 +16,9 @@
         android:layout_height="wrap_content"
         android:paddingHorizontal="20dp"
         android:paddingVertical="8dp"
+        android:background="@drawable/ripple_category"
         android:text="Category"
+        android:fontFamily="@font/montserrat_regular"
         android:textColor="#800000"
         android:textSize="14sp"
         android:textStyle="bold" />

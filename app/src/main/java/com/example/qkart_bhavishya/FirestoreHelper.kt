@@ -20,13 +20,7 @@ class FirestoreHelper {
             }
             .addOnFailureListener { onFailure(it) }
     }
-
-    fun placeOrder(order: OrderModel, onComplete: (Boolean) -> Unit) {
-        db.collection("orders")
-            .add(order)
-            .addOnSuccessListener { onComplete(true) }
-            .addOnFailureListener { onComplete(false) }
-    }
+    
 
     fun observeOrders(onUpdate: (List<OrderModel>) -> Unit) {
         db.collection("orders")
@@ -82,5 +76,19 @@ class FirestoreHelper {
                 onResult(items)
             }
     }
+
+
+    fun placeOrder(order: OrderModel, onComplete: (Boolean) -> Unit) {
+        // Generate a new document reference in the "orders" collection
+        val orderRef = db.collection("orders").document()
+
+        // Assign the generated ID to the order object
+        val finalOrder = order.copy(orderId = orderRef.id)
+
+        orderRef.set(finalOrder)
+            .addOnSuccessListener { onComplete(true) }
+            .addOnFailureListener { onComplete(false) }
+    }
+
 
 }

@@ -9,5 +9,16 @@
     <style name="RoundedSquare">
         <item name="cornerSize">12dp</item>
     </style>
+    <style name="FoodTitleText">
+        <item name="android:fontFamily">@font/poppins_bold</item>
+        <item name="android:textSize">18sp</item>
+        <item name="android:textColor">#800000</item>
+    </style>
+
+    <style name="FoodDescriptionText">
+        <item name="android:fontFamily">@font/poppins_regular</item>
+        <item name="android:textSize">14sp</item>
+        <item name="android:textColor">#555555</item>
+    </style>
 
 </resources>

@@ -13,7 +13,7 @@ class CategoryAdapter(
     private val onCategoryClicked: (String) -> Unit
 ) : RecyclerView.Adapter<CategoryAdapter.CategoryViewHolder>() {
 
-    // This keeps track of which pill is "Active" (Default is 0 for "All")
+    // This is keeping track of which category is "Active"
     private var selectedPosition = 0
 
     class CategoryViewHolder(view: View) : RecyclerView.ViewHolder(view) {
@@ -32,18 +32,21 @@ class CategoryAdapter(
         holder.tvCategory.text = category
 
         // --- Visual Feedback Logic ---
+
+        // 1. Tell the view if it is selected or not
+        holder.itemView.isSelected = (selectedPosition == position)
+
         if (selectedPosition == position) {
-            // Selected: Maroon background, White text
-            holder.card.setCardBackgroundColor(Color.parseColor("#800000"))
+
             holder.tvCategory.setTextColor(Color.WHITE)
         } else {
-            // Not Selected: Light background, Maroon text
-            holder.card.setCardBackgroundColor(Color.parseColor("#FFF7FF"))
+
             holder.tvCategory.setTextColor(Color.parseColor("#800000"))
         }
 
+        // Updating UI to show the new selection
         holder.itemView.setOnClickListener {
-            // Update the UI to show the new selection
+
             val lastPosition = selectedPosition
             selectedPosition = holder.adapterPosition
             notifyItemChanged(lastPosition)

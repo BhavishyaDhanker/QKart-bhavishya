@@ -12,7 +12,9 @@ data class OrderModel(
 )
 
 data class CartItem(
-    val itemName: String = "",
+    val itemId: String = "",
+    val name: String = "",
+    val imageUrl: String = "",
     val quantity: Int = 0,
     val price: Double = 0.0
 )

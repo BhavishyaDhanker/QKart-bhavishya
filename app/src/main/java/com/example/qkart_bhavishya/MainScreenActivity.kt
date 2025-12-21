@@ -1,6 +1,8 @@
 package com.example.qkart_bhavishya
 
+import android.content.Intent
 import android.os.Bundle
+import android.widget.ImageView
 import android.widget.TextView
 import android.widget.Toast
 import androidx.activity.enableEdgeToEdge
@@ -21,38 +23,45 @@ class MainScreenActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main_screen)
 
-        // 1. Setup Welcome Message
-       // val tvWelcome = findViewById<TextView>(R.id.tvWelcomeUser)
-        // tvWelcome.text = "Welcome, Student" // You can replace with actual name later
+        // Setup Welcome Message
+       //  val tvWelcome = findViewById<TextView>(R.id.tvWelcomeUser)
+         //tvWelcome.text = "Welcome, Student" // You can replace with actual name later
 
-        // Inside MainScreenActivity onCreate
         val rvCategories = findViewById<RecyclerView>(R.id.rvCategories)
 
-        // 2.1. Set the layout manager to HORIZONTAL
+        // Setting the layout manager to HORIZONTAL
             rvCategories.layoutManager = LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false)
 
-        // 2.2. Define your list of categories
+        // list of categories
             val categories = listOf("All", "Snacks", "Drinks", "Meals", "Desserts")
 
-        // 2.3. Set the adapter
+        // adapter syntax
             val catAdapter = CategoryAdapter(categories) { selectedCategory ->
                 filterMenu(selectedCategory)
             }
             rvCategories.adapter = catAdapter
 
-        // 3. Setup Food RecyclerView
+        // Setup of Food RecyclerView
         val rvMenu = findViewById<RecyclerView>(R.id.rvStudentMenu)
         rvMenu.layoutManager = LinearLayoutManager(this)
         foodAdapter = StudentMenuAdapter(emptyList()) { item ->
-            // Logic for adding to cart goes here!
+            // yahn pe jb cart banegi tb add to cart ka code/logic aayega
+
             Toast.makeText(this, "${item.name} added to cart", Toast.LENGTH_SHORT).show()
         }
         rvMenu.adapter = foodAdapter
 
-        // 4. Fetch Data
+        // Fetching Data from database
         helper.getMenu { items ->
             fullMenuList = items
             filterMenu("All") // Show all items initially
+        }
+
+
+        val btnCart = findViewById<ImageView>(R.id.btnCart)
+        btnCart.setOnClickListener {
+            val intentCart = Intent(this , ActivityCart::class.java)
+            startActivity(intentCart)
         }
     }
 

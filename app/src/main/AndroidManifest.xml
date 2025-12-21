@@ -19,6 +19,9 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.QKart_bhavishya">
         <activity
+            android:name=".ActivityCart"
+            android:exported="false" />
+        <activity
             android:name=".ManageMenuAdminActivity"
             android:exported="false" />
         <activity

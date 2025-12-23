@@ -14,7 +14,7 @@ object CartManager {
             selectedItems[id] = existingItem.copy(quantity = existingItem.quantity + 1)
         } else {
             // New item, add to map
-            selectedItems[id] = CartItem(id, item.name, 1, price)
+            selectedItems[id] = CartItem(id, item.name, "https://share.google/dka4pCVsUMVmyWXxa", 1, price= price)
         }
     }
 

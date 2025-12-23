@@ -2,6 +2,7 @@ package com.example.qkart_bhavishya
 
 import android.os.Bundle
 import android.view.View
+import android.widget.LinearLayout
 import android.widget.TextView
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
@@ -9,12 +10,12 @@ import androidx.appcompat.widget.AppCompatButton
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 
-class CartActivity : AppCompatActivity() {
+class ActivityCart : AppCompatActivity() {
 
     private lateinit var rvCart: RecyclerView
     private lateinit var tvTotalAmount: TextView
     private lateinit var btnPlaceOrder: AppCompatButton
-    private lateinit var tvEmptyCartMsg: TextView
+    private lateinit var tvEmptyCartMsg: LinearLayout
     private lateinit var cartAdapter: CartAdapter
     private val helper = FirestoreHelper()
 

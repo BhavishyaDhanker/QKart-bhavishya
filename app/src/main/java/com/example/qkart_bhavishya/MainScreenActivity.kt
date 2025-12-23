@@ -2,6 +2,7 @@ package com.example.qkart_bhavishya
 
 import android.content.Intent
 import android.os.Bundle
+import android.view.View
 import android.widget.ImageView
 import android.widget.TextView
 import android.widget.Toast
@@ -23,9 +24,11 @@ class MainScreenActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main_screen)
 
-        // Setup Welcome Message
-       //  val tvWelcome = findViewById<TextView>(R.id.tvWelcomeUser)
-         //tvWelcome.text = "Welcome, Student" // You can replace with actual name later
+        val cartBadgeDot = findViewById<View>(R.id.cartBadgeDot)
+
+        if (CartManager.getCartList().isNotEmpty()) {
+            cartBadgeDot.visibility = View.VISIBLE
+        }
 
         val rvCategories = findViewById<RecyclerView>(R.id.rvCategories)
 
@@ -45,8 +48,8 @@ class MainScreenActivity : AppCompatActivity() {
         val rvMenu = findViewById<RecyclerView>(R.id.rvStudentMenu)
         rvMenu.layoutManager = LinearLayoutManager(this)
         foodAdapter = StudentMenuAdapter(emptyList()) { item ->
-            // yahn pe jb cart banegi tb add to cart ka code/logic aayega
-
+            CartManager.addItem(item)
+            cartBadgeDot.visibility = View.VISIBLE // to show the badge on top of cart icon
             Toast.makeText(this, "${item.name} added to cart", Toast.LENGTH_SHORT).show()
         }
         rvMenu.adapter = foodAdapter

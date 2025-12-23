@@ -21,24 +21,42 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="QKART Canteen"
-
             android:textColor="@android:color/white"
             android:textSize="22sp"
             android:id="@+id/mainHeading"
             android:textStyle="bold"
             android:layout_centerVertical="true"/>
 
-        <ImageView
-            android:id="@+id/btnCart"
-            android:layout_width="32dp"
-            android:layout_height="32dp"
+        <FrameLayout
+            android:id="@+id/cartContainer"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
             android:layout_alignParentEnd="true"
             android:layout_centerVertical="true"
-            android:src="@drawable/ic_cart_24"
-            app:tint="@android:color/white"
+            android:layout_marginEnd="16dp"
+            android:clipChildren="false"
+            android:clipToPadding="false"
             android:clickable="true"
             android:focusable="true"
-            android:background="?attr/selectableItemBackgroundBorderless"  />
+            android:background="?attr/selectableItemBackgroundBorderless"
+            >
+
+            <ImageView
+                android:id="@+id/btnCart"
+                android:layout_width="32dp"
+                android:layout_height="32dp"
+                android:padding="4dp"
+                android:src="@drawable/ic_cart_24"
+                app:tint="@android:color/white" />
+
+            <View
+                android:id="@+id/cartBadgeDot"
+                android:layout_width="10dp"
+                android:layout_height="10dp"
+                android:layout_gravity="top|end"
+                android:background="@drawable/bg_red_dot"
+                android:visibility="gone" />
+        </FrameLayout>
     </RelativeLayout>
 
     <androidx.recyclerview.widget.RecyclerView

@@ -30,6 +30,7 @@ class CartAdapter(private var cartList: List<CartItem>,
 
         holder.tvName.text = item.name
         holder.tvQty.text = "x${item.quantity}"
+        holder.tvQtyValue.text = item.quantity.toString()
 
         // Calculate subtotal for this item row
         val subTotal = item.price * item.quantity

@@ -47,13 +47,14 @@ class SignIn1Activity : AppCompatActivity() {
         signIn.setOnClickListener {
             val username = SIusername.text.toString().trim()
             val password = SIpassword.text.toString().trim()
-
             if (username.isNotEmpty() && password.isNotEmpty()) {
                 readData(username, password)
             } else {
                 Toast.makeText(this, "Please enter username and password", Toast.LENGTH_SHORT).show()
             }
         }
+
+
     }
 
     private fun readData(username: String, password: String) {
@@ -65,6 +66,14 @@ class SignIn1Activity : AppCompatActivity() {
                     if (storedPassword == password) {
                         val user = it.child("username").value.toString()
                         val rollNo = it.child("rollNo").value.toString()
+
+                        val sharedPref = getSharedPreferences("UserPrefs", MODE_PRIVATE)
+                        with(sharedPref.edit()) {
+                            putString("rollNo", rollNo)
+                            putString("userName", username)
+                            apply()
+                        }
+
 
                         val role = it.child("role").value?.toString() ?: "student"
 

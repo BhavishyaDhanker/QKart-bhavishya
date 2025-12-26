@@ -67,30 +67,6 @@
     </androidx.cardview.widget.CardView>
 
 
-    <androidx.cardview.widget.CardView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        app:cardCornerRadius="20dp"
-        android:background="@color/off_white"
-        android:elevation="300dp"
-        android:id="@+id/btnUpdateStatus"
-        android:layout_gravity="right"
-
-        >
-
-        <TextView
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:paddingHorizontal="20dp"
-            android:paddingVertical="10dp"
-            android:text="UPDATE  STATUS "
-            android:background="@color/maroon"
-            android:textColor="@color/off_white"/>
-
-    </androidx.cardview.widget.CardView>
-
-
-
     <androidx.recyclerview.widget.RecyclerView
         android:layout_width="match_parent"
         android:layout_height="0dp"

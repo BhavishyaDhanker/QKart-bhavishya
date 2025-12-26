@@ -2,6 +2,7 @@ package com.example.qkart_bhavishya
 
 import android.content.Intent
 import android.os.Bundle
+import android.provider.ContactsContract
 import android.view.View
 import android.widget.ImageView
 import android.widget.TextView
@@ -65,6 +66,12 @@ class MainScreenActivity : AppCompatActivity() {
         btnCart.setOnClickListener {
             val intentCart = Intent(this , ActivityCart::class.java)
             startActivity(intentCart)
+        }
+
+        val settings = findViewById<ImageView>(R.id.settings)
+        settings.setOnClickListener {
+            val intentSettings = Intent(this , SettingsActivity::class.java)
+            startActivity(intentSettings)
         }
     }
 

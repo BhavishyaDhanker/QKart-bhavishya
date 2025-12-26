@@ -49,6 +49,13 @@ class SignUp1Activity : AppCompatActivity() {
             val rollNo = SUroll.text.toString()
             val pass = SUpass.text.toString()
 
+            val sharedPref = getSharedPreferences("UserPrefs", MODE_PRIVATE)
+            with(sharedPref.edit()) {
+                putString("rollNo", rollNo)
+                putString("userName", username)
+                apply()
+            }
+
             if (username.isNotEmpty() && rollNo.isNotEmpty() && pass.isNotEmpty()) {
                 val user = User(username, rollNo, pass, "student")
                 database = FirebaseDatabase.getInstance().getReference("Users")

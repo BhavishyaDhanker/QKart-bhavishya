@@ -12,9 +12,10 @@
     <RelativeLayout
         android:id="@+id/headerBar"
         android:layout_width="match_parent"
+        android:padding="16dp"
         android:layout_height="70dp"
         android:background="#800000"
-        android:padding="16dp"
+        android:fitsSystemWindows="true"
         app:layout_constraintTop_toTopOf="parent">
 
         <TextView
@@ -84,5 +85,51 @@
         app:layout_constraintTop_toBottomOf="@id/rvCategories"
         app:layout_constraintVertical_bias="1.0"
         tools:listitem="@layout/item_menu_student" />
+
+
+    <LinearLayout
+        android:id="@+id/bottomNavBar"
+        android:layout_width="match_parent"
+        android:layout_height="65dp"
+        android:background="@color/maroon"
+        android:elevation="20dp"
+        android:weightSum="4"
+        app:layout_constraintBottom_toBottomOf="parent">
+
+<ImageView
+    android:layout_width="0dp"
+    android:layout_height="match_parent"
+    android:layout_weight="1"
+    android:id="@+id/home"
+    app:tint="@color/off_white"
+    android:src="@drawable/home_12_dp"/>
+
+        <ImageView
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:id="@+id/account"
+            app:tint="@color/off_white"
+            android:src="@drawable/baseline_person_24"/>
+
+        <ImageView
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:id="@+id/Orders"
+            app:tint="@color/off_white"
+            android:src="@drawable/shopping_cart_16_dp"/>
+
+        <ImageView
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:id="@+id/settings"
+            app:tint="@color/off_white"
+            android:src="@drawable/settings_16_dp"/>
+
+
+
+    </LinearLayout>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

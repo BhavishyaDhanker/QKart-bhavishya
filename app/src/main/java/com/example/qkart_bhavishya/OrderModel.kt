@@ -2,8 +2,8 @@ package com.example.qkart_bhavishya
 
 data class OrderModel(
     val orderId: String = "",
-    val username: String = "",       // The name the student signed up with
-    val rollNo: String = "",         // The IIT Dhanbad Roll Number
+    val username: String = "",
+    val rollNo: String = "",
     val items: List<CartItem> = listOf(),
     val totalAmount: Double = 0.0,
     val status: String = "Pending",  // Pending, Preparing, Ready, Completed

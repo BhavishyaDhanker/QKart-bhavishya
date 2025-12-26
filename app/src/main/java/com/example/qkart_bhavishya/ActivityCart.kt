@@ -77,10 +77,13 @@ class ActivityCart : AppCompatActivity() {
     }
 
     private fun placeFinalOrder(items: List<CartItem>) {
-        // Build the OrderModel (You can replace name/roll with real User data later)
+        val sharedPref = getSharedPreferences("UserPrefs", MODE_PRIVATE)
+        val rollNo = sharedPref.getString("rollNo", "Unknown") ?: "Unknown"
+        val name = sharedPref.getString("userName", "Student") ?: "Student"
+
         val newOrder = OrderModel(
-            username = "Student User",
-            rollNo = "22JE0000",
+            username = name,
+            rollNo = rollNo,
             items = items,
             totalAmount = CartManager.getTotalPrice(),
             status = "Pending",

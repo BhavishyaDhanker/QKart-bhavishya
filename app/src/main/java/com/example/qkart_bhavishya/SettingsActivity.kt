@@ -1,6 +1,8 @@
 package com.example.qkart_bhavishya
 
+import android.content.Intent
 import android.os.Bundle
+import android.widget.ImageView
 import android.widget.TextView
 import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
@@ -24,5 +26,12 @@ class SettingsActivity : AppCompatActivity() {
 
         val setMyRollNo = findViewById<TextView>(R.id.setMyRollNo)
         setMyRollNo.setText("Roll Number: $rollNo")
+
+        val btnBack = findViewById<ImageView>(R.id.btnBack)
+        btnBack.setOnClickListener {
+            val intentback = Intent(this , MainScreenActivity::class.java)
+            startActivity(intentback)
+            finish()
+        }
     }
 }

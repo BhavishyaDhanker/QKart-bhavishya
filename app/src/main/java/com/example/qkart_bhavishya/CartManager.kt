@@ -41,4 +41,14 @@ object CartManager {
             }
         }
     }
+
+    fun addCartItemDirectly(item: CartItem) {
+        val id = item.itemId
+        if (selectedItems.containsKey(id)) {
+            val existing = selectedItems[id]!!
+            selectedItems[id] = existing.copy(quantity = existing.quantity + item.quantity)
+        } else {
+            selectedItems[id] = item
+        }
+    }
 }

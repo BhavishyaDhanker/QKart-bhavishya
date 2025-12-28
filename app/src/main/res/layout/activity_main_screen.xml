@@ -116,7 +116,7 @@
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:layout_weight="1"
-            android:id="@+id/Orders"
+            android:id="@+id/OrderHistory"
             app:tint="@color/off_white"
             android:src="@drawable/shopping_cart_16_dp"/>
 

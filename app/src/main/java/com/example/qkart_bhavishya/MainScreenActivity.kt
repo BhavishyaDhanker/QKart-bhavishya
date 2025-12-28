@@ -73,6 +73,12 @@ class MainScreenActivity : AppCompatActivity() {
             val intentSettings = Intent(this , SettingsActivity::class.java)
             startActivity(intentSettings)
         }
+
+       val orderHistory = findViewById<ImageView>(R.id.OrderHistory)
+        orderHistory.setOnClickListener {
+            val intentHistory = Intent(this , OrderHistoryActivity::class.java)
+            startActivity(intentHistory)
+        }
     }
 
     private fun filterMenu(category: String) {

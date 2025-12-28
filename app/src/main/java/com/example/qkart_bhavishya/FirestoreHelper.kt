@@ -10,18 +10,6 @@ import com.google.firebase.firestore.toObjects
 class FirestoreHelper {
     private val db = FirebaseFirestore.getInstance()
 
-    fun getMenu(onSuccess: (List<MenuItem>) -> Unit, onFailure: (Exception) -> Unit) {
-        db.collection("menu")
-            .whereEqualTo("isAvailable", true)
-            .get()
-            .addOnSuccessListener { result ->
-                val menuList = result.toObjects<MenuItem>()
-                onSuccess(menuList)
-            }
-            .addOnFailureListener { onFailure(it) }
-    }
-    
-
     fun observeOrders(onUpdate: (List<OrderModel>) -> Unit) {
         db.collection("orders")
             .orderBy("timestamp", Query.Direction.DESCENDING)

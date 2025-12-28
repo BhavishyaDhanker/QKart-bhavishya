@@ -20,19 +20,37 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:orientation="vertical">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@color/maroon">
+
     <TextView
-        android:layout_width="match_parent"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:text="Canteen Admin Panel"
+        android:text="       Canteen Admin Panel"
         android:background="@color/maroon"
         android:padding="30dp"
         android:layout_marginBottom="5dp"
         android:textColor="@color/off_white"
         android:gravity="center"
         android:textStyle="bold"
+        android:layout_weight="1"
         android:textSize="26dp"/>
 
+                <ImageView
+                    android:id="@+id/btnClearHistory"
+                    android:layout_width="30dp"
+                    android:layout_height="30dp"
+                    android:layout_gravity="center_vertical"
+                    android:layout_marginEnd="16dp"
+                    android:src="@drawable/baseline_delete_24"
+                    app:tint="@color/off_white"
+                    android:contentDescription="Clear Completed Orders" />
 
+
+            </LinearLayout>
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content">

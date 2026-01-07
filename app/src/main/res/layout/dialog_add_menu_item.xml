@@ -15,6 +15,34 @@
         android:textStyle="bold"
         android:layout_marginBottom="15dp"/>
 
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:gravity="center_vertical"
+        android:layout_marginBottom="15dp">
+
+        <com.google.android.material.imageview.ShapeableImageView
+            android:id="@+id/ivItemImage"
+            android:layout_width="80dp"
+            android:layout_height="80dp"
+            android:scaleType="centerCrop"
+            android:background="#EEEEEE"
+            android:src="@drawable/burger"
+            />
+
+        <TextView
+            android:id="@+id/btnSelectImage"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Select Photo"
+            android:textColor="#007BFF"
+            android:layout_marginStart="15dp"
+            android:padding="10dp"
+            android:textStyle="bold"
+            android:background="?attr/selectableItemBackground"/>
+    </LinearLayout>
+
     <EditText
         android:id="@+id/etItemName"
         android:layout_width="match_parent"
@@ -27,7 +55,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:inputType="number"
-        android:hint="Price (e.g. ₹15)" />
+        android:hint="Price (e.g. 15)" />
 
     <EditText
         android:id="@+id/etItemDesc"

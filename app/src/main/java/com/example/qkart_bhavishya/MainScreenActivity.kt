@@ -2,104 +2,61 @@ package com.example.qkart_bhavishya
 
 import android.content.Intent
 import android.os.Bundle
-import android.provider.ContactsContract
 import android.view.View
 import android.widget.ImageView
-import android.widget.TextView
 import android.widget.Toast
-import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
-import androidx.core.view.ViewCompat
-import androidx.core.view.WindowInsetsCompat
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 
 class MainScreenActivity : AppCompatActivity() {
 
     private lateinit var foodAdapter: StudentMenuAdapter
-    private lateinit var catAdapter: CategoryAdapter
     private val helper = FirestoreHelper()
     private var fullMenuList = listOf<MenuItem>()
+    private lateinit var cartBadgeDot: View
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main_screen)
 
-        val cartBadgeDot = findViewById<View>(R.id.cartBadgeDot)
+        cartBadgeDot = findViewById(R.id.cartBadgeDot)
+        updateCartBadge()
 
-        if (CartManager.getCartList().isNotEmpty()) {
-            cartBadgeDot.visibility = View.VISIBLE
-        }
-
+        // Categories setup
         val rvCategories = findViewById<RecyclerView>(R.id.rvCategories)
+        rvCategories.layoutManager = LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false)
+        val categories = listOf("All", "Snacks", "Drinks", "Meals", "Desserts")
+        rvCategories.adapter = CategoryAdapter(categories) { filterMenu(it) }
 
-        // Setting the layout manager to HORIZONTAL
-            rvCategories.layoutManager = LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false)
-
-        // list of categories
-            val categories = listOf("All", "Snacks", "Drinks", "Meals", "Desserts")
-
-        // adapter syntax
-            val catAdapter = CategoryAdapter(categories) { selectedCategory ->
-                filterMenu(selectedCategory)
-            }
-            rvCategories.adapter = catAdapter
-
-        // Setup of Food RecyclerView
+        // Menu setup
         val rvMenu = findViewById<RecyclerView>(R.id.rvStudentMenu)
         rvMenu.layoutManager = LinearLayoutManager(this)
         foodAdapter = StudentMenuAdapter(emptyList()) { item ->
             CartManager.addItem(item)
-            if (CartManager.getCartItems().isNotEmpty()) {
-                cartBadgeDot.visibility = View.VISIBLE
-            } else {
-                cartBadgeDot.visibility = View.GONE
-            }
-            Toast.makeText(this, "${item.name} added to cart", Toast.LENGTH_SHORT).show()
+            updateCartBadge()
+            Toast.makeText(this, "${item.name} added", Toast.LENGTH_SHORT).show()
         }
         rvMenu.adapter = foodAdapter
 
-        // Fetching Data from database
         helper.getMenu { items ->
             fullMenuList = items
-            filterMenu("All") // Show all items initially
+            filterMenu("All")
         }
 
-
-        val btnCart = findViewById<ImageView>(R.id.btnCart)
-        btnCart.setOnClickListener {
-            val intentCart = Intent(this , ActivityCart::class.java)
-            startActivity(intentCart)
-        }
-
-        val settings = findViewById<ImageView>(R.id.settings)
-        settings.setOnClickListener {
-            val intentSettings = Intent(this , SettingsActivity::class.java)
-            startActivity(intentSettings)
-        }
-
-       val orderHistory = findViewById<ImageView>(R.id.OrderHistory)
-        orderHistory.setOnClickListener {
-            val intentHistory = Intent(this , OrderHistoryActivity::class.java)
-            startActivity(intentHistory)
-        }
+        // Navigation
+        findViewById<ImageView>(R.id.btnCart).setOnClickListener { startActivity(Intent(this, ActivityCart::class.java)) }
+        findViewById<ImageView>(R.id.OrderHistory).setOnClickListener { startActivity(Intent(this, OrderHistoryActivity::class.java)) }
     }
 
     private fun filterMenu(category: String) {
-        val filteredList = if (category == "All") {
-            fullMenuList // fullMenuList is the original list from Firestore
-        } else {
-            fullMenuList.filter { it.category.equals(category, ignoreCase = true) }
-        }
-        foodAdapter.updateList(filteredList)
+        val filtered = if (category == "All") fullMenuList else fullMenuList.filter { it.category.equals(category, true) }
+        foodAdapter.updateList(filtered)
     }
 
+    override fun onResume() { super.onResume(); updateCartBadge() }
+
     private fun updateCartBadge() {
-        // If cart is not empty, show the dot; otherwise, hide it
-        if (CartManager.getCartItems().isNotEmpty()) {
-            cartBadgeDot.visibility = View.VISIBLE
-        } else {
-            cartBadgeDot.visibility = View.GONE
-        }
+        cartBadgeDot.visibility = if (CartManager.getCartList().isNotEmpty()) View.VISIBLE else View.GONE
     }
 }

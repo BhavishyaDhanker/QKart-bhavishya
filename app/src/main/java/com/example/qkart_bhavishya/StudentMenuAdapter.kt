@@ -5,11 +5,12 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
+import com.bumptech.glide.Glide
 import com.google.android.material.imageview.ShapeableImageView
 
 class StudentMenuAdapter(
     private var menuList: List<MenuItem>,
-    private val onAddClicked: (MenuItem) -> Unit // This tells the Activity when "+" is clicked
+    private val onAddClicked: (MenuItem) -> Unit
 ) : RecyclerView.Adapter<StudentMenuAdapter.StudentViewHolder>() {
 
     class StudentViewHolder(view: View) : RecyclerView.ViewHolder(view) {
@@ -18,11 +19,11 @@ class StudentMenuAdapter(
         val tvDesc: TextView = view.findViewById(R.id.food_description)
         val btnAdd: View = view.findViewById(R.id.add_btn_text)
         val soldOutOverlay: View = view.findViewById(R.id.soldOutOverlay)
+        val ivFood: ShapeableImageView = view.findViewById(R.id.food_image) // Reference to your ImageView
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): StudentViewHolder {
-        val view = LayoutInflater.from(parent.context)
-            .inflate(R.layout.item_menu_student, parent, false)
+        val view = LayoutInflater.from(parent.context).inflate(R.layout.item_menu_student, parent, false)
         return StudentViewHolder(view)
     }
 
@@ -33,7 +34,15 @@ class StudentMenuAdapter(
         holder.tvPrice.text = "₹ ${item.price}"
         holder.tvDesc.text = item.description
 
-        // Check if item is available
+        // Load image using Glide
+        Glide.with(holder.itemView.context)
+            .load(item.imageUrl)
+            .placeholder(R.drawable.burger)
+            .error(R.drawable.burger)
+            .centerCrop()
+            .into(holder.ivFood)
+
+
         if (item.isAvailable) {
             holder.soldOutOverlay.visibility = View.GONE
             holder.btnAdd.isEnabled = true
@@ -41,18 +50,12 @@ class StudentMenuAdapter(
         } else {
             holder.soldOutOverlay.visibility = View.VISIBLE
             holder.btnAdd.isEnabled = false
-            holder.btnAdd.alpha = 0.5f // Make button look disabled
+            holder.btnAdd.alpha = 0.5f
         }
 
-        holder.btnAdd.setOnClickListener {
-            onAddClicked(item)
-        }
+        holder.btnAdd.setOnClickListener { onAddClicked(item) }
     }
 
     override fun getItemCount() = menuList.size
-
-    fun updateList(newList: List<MenuItem>) {
-        menuList = newList
-        notifyDataSetChanged()
-    }
+    fun updateList(newList: List<MenuItem>) { menuList = newList; notifyDataSetChanged() }
 }

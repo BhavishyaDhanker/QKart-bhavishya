@@ -4,11 +4,13 @@ import android.content.Intent
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.widget.EditText
+import android.widget.ImageView
 import android.widget.TextView
 import android.widget.Toast
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.RecyclerView
+import com.google.firebase.auth.FirebaseAuth
 
 class ManageMenuAdminActivity : AppCompatActivity() {
 
@@ -49,6 +51,33 @@ class ManageMenuAdminActivity : AppCompatActivity() {
             // This updates the Admin list whenever you add a new item or change a switch
             adapter.updateList(items)
         }
+
+
+        val btnLogout = findViewById<ImageView>(R.id.btnlogout)
+
+        btnLogout.setOnClickListener {
+
+            val builder = androidx.appcompat.app.AlertDialog.Builder(this)
+            builder.setTitle("Logout")
+            builder.setMessage("Are you sure you want to log out?")
+            builder.setIcon(R.drawable.outline_exit_24)
+
+
+            builder.setPositiveButton("Yes") { dialog, _ ->
+                performLogout()
+                dialog.dismiss()
+            }
+
+
+            builder.setNegativeButton("No") { dialog, _ ->
+                dialog.dismiss()
+            }
+
+
+            val alertDialog = builder.create()
+            alertDialog.show()
+        }
+
     }
 
     private fun showAddItemDialog() {
@@ -100,4 +129,22 @@ class ManageMenuAdminActivity : AppCompatActivity() {
 
         etName.requestFocus()
     }
+
+    private fun performLogout() {
+        // 1. Sign out from Firebase Auth
+        FirebaseAuth.getInstance().signOut()
+
+        // 2. Clear SharedPreferences
+        val sharedPref = getSharedPreferences("UserPrefs", MODE_PRIVATE)
+        sharedPref.edit().clear().apply()
+
+        // 3. Navigate to SignIn screen and clear activity stack
+        val intent = Intent(this, SignIn1Activity::class.java)
+        intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
+        startActivity(intent)
+        finish()
+
+        Toast.makeText(this, "Logged out successfully", Toast.LENGTH_SHORT).show()
+    }
+
 }

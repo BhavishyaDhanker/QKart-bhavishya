@@ -6,7 +6,7 @@ data class OrderModel(
     val rollNo: String = "",
     val items: List<CartItem> = listOf(),
     val totalAmount: Double = 0.0,
-    val status: String = "Pending",  // Pending, Preparing, Ready, Completed
+    val status: String = "Pending",
     val timestamp: Long = System.currentTimeMillis(),
     val pickupTime: String = ""
 )

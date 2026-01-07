@@ -28,7 +28,16 @@ class StudentOrderAdapter(private var orders: List<OrderModel>) :
     override fun onBindViewHolder(holder: OrderViewHolder, position: Int) {
         val order = orders[position]
 
-        holder.tvItems.text = order.items.joinToString { "${it.quantity}x ${it.name}" }
+        // prevents 0x from being written when we are loading an already flattened string from room history
+        holder.tvItems.text = order.items.joinToString { item ->
+            if (item.quantity > 0) {
+                // Normal case (Firestore data): Shows "2x Tea"
+                "${item.quantity}x ${item.name}"
+            } else {
+                // Room History case: Shows "2x Tea, 1x Oreo..." without adding another "0x"
+                item.name
+            }
+        }
         holder.tvTotal.text = "₹${order.totalAmount}"
         holder.tvStatus.text = order.status
 
@@ -50,7 +59,6 @@ class StudentOrderAdapter(private var orders: List<OrderModel>) :
             holder.btnReorder.visibility = View.GONE
         }
 
-        // Inside StudentOrderAdapter.kt (onBindViewHolder)
 
         holder.btnReorder.setOnClickListener {
             val context = holder.itemView.context
@@ -83,7 +91,7 @@ class StudentOrderAdapter(private var orders: List<OrderModel>) :
         }
 
 
-        // Apply your custom drawables
+        // Applying my drawable backgrounds
         val statusBg = when (order.status) {
             "Pending" -> R.drawable.status_bg_pending
             "Preparing" -> R.drawable.status_bg_preparing

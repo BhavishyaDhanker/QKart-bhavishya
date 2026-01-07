@@ -50,7 +50,11 @@ class MainScreenActivity : AppCompatActivity() {
         rvMenu.layoutManager = LinearLayoutManager(this)
         foodAdapter = StudentMenuAdapter(emptyList()) { item ->
             CartManager.addItem(item)
-            cartBadgeDot.visibility = View.VISIBLE // to show the badge on top of cart icon
+            if (CartManager.getCartItems().isNotEmpty()) {
+                cartBadgeDot.visibility = View.VISIBLE
+            } else {
+                cartBadgeDot.visibility = View.GONE
+            }
             Toast.makeText(this, "${item.name} added to cart", Toast.LENGTH_SHORT).show()
         }
         rvMenu.adapter = foodAdapter
@@ -88,5 +92,14 @@ class MainScreenActivity : AppCompatActivity() {
             fullMenuList.filter { it.category.equals(category, ignoreCase = true) }
         }
         foodAdapter.updateList(filteredList)
+    }
+
+    private fun updateCartBadge() {
+        // If cart is not empty, show the dot; otherwise, hide it
+        if (CartManager.getCartItems().isNotEmpty()) {
+            cartBadgeDot.visibility = View.VISIBLE
+        } else {
+            cartBadgeDot.visibility = View.GONE
+        }
     }
 }

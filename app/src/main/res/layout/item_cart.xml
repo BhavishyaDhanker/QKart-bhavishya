@@ -39,14 +39,7 @@
                 android:textColor="#333333"
                 android:textSize="16sp" />
 
-            <TextView
-                android:id="@+id/tvCartItemQty"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:fontFamily="@font/roboto_regular"
-                android:text="Quantity: 2"
-                android:textColor="#757575"
-                android:textSize="13sp" />
+
         </LinearLayout>
 
         <LinearLayout

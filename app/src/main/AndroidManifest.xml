@@ -13,11 +13,11 @@
         android:allowBackup="true"
         android:dataExtractionRules="@xml/data_extraction_rules"
         android:fullBackupContent="@xml/backup_rules"
-        android:icon="@mipmap/ic_launcher"
+        android:icon="@drawable/q_kart"
         android:label="@string/app_name"
-        android:roundIcon="@mipmap/ic_launcher_round"
+        android:roundIcon="@drawable/q_kart"
         android:supportsRtl="true"
-        android:theme="@style/Theme.QKart_bhavishya">
+        android:theme="@style/Theme.QKart_Bhavishya">
         <activity
             android:name=".AccountActivity"
             android:exported="false" />
@@ -26,9 +26,6 @@
             android:exported="false" />
         <activity
             android:name=".OrderHistoryActivity"
-            android:exported="false" />
-        <activity
-            android:name=".SettingsActivity"
             android:exported="false" />
         <activity
             android:name=".ActivityCart"

@@ -1,5 +1,6 @@
 package com.example.qkart_bhavishya
 
+import android.content.Intent
 import android.os.Bundle
 import android.view.View
 import android.widget.LinearLayout
@@ -9,6 +10,7 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.AppCompatButton
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.google.android.material.bottomnavigation.BottomNavigationView
 
 class ActivityCart : AppCompatActivity() {
 
@@ -17,6 +19,8 @@ class ActivityCart : AppCompatActivity() {
     private lateinit var btnPlaceOrder: AppCompatButton
     private lateinit var tvEmptyCartMsg: LinearLayout
     private lateinit var cartAdapter: CartAdapter
+    private lateinit var bottomNav: BottomNavigationView
+
     private var selectedPickupTime: String = "ASAP"
     private val helper = FirestoreHelper()
 
@@ -28,12 +32,16 @@ class ActivityCart : AppCompatActivity() {
         rvCart = findViewById(R.id.rvCartItems)
         tvTotalAmount = findViewById(R.id.tvTotalAmount)
         btnPlaceOrder = findViewById(R.id.btnPlaceOrder)
-        tvEmptyCartMsg = findViewById(R.id.tvEmptyCartMsg) // Make sure this is in your XML
+        tvEmptyCartMsg = findViewById(R.id.tvEmptyCartMsg)
+        bottomNav = findViewById(R.id.bottomNavigationView)
 
         setupRecyclerView()
         updateUI()
 
-        // 2. Place Order Button Logic
+        // 2. Setup Bottom Nav
+        setupBottomNav()
+
+        // 3. Place Order Button Logic
         btnPlaceOrder.setOnClickListener {
             val items = CartManager.getCartList()
             if (items.isNotEmpty()) {
@@ -67,10 +75,42 @@ class ActivityCart : AppCompatActivity() {
         }
     }
 
+    override fun onResume() {
+        super.onResume()
+        // Highlight the 'Cart' tab when this activity is visible
+        bottomNav.selectedItemId = R.id.nav_cart
+    }
+
+    private fun setupBottomNav() {
+        bottomNav.setOnItemSelectedListener { item ->
+            when (item.itemId) {
+                R.id.nav_home -> {
+                    startActivity(Intent(this, MainScreenActivity::class.java))
+                    finish() // Close cart so we don't stack
+                    true
+                }
+                R.id.nav_cart -> {
+                    // Already here
+                    true
+                }
+                R.id.nav_history -> {
+                    startActivity(Intent(this, OrderHistoryActivity::class.java))
+                    // finish() // Optional: keep cart in backstack or not
+                    true
+                }
+                R.id.nav_account -> {
+                    startActivity(Intent(this, AccountActivity::class.java))
+                    // finish() // Optional
+                    true
+                }
+                else -> false
+            }
+        }
+    }
+
     private fun setupRecyclerView() {
         rvCart.layoutManager = LinearLayoutManager(this)
 
-        // 3. The "onCartChanged" Lambda logic
         // Whenever + or - is clicked in the adapter, this block runs
         cartAdapter = CartAdapter(CartManager.getCartList()) {
             updateUI() // Recalculate total and check if empty

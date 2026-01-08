@@ -5,7 +5,6 @@ import android.os.Bundle
 import android.widget.ImageView
 import android.widget.TextView
 import android.widget.Toast
-import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
@@ -15,12 +14,27 @@ class LiveOrdersAdminActivity : AppCompatActivity() {
     private lateinit var helper: FirestoreHelper
     private lateinit var adapter: AdminOrderAdapter
 
+    // State to track whether completed orders are shown
+    private var showCompletedOrders = true
+
+    // Store the full list from Firestore locally so we can filter immediately on toggle
+    private var allFetchedOrders: List<OrderModel> = emptyList()
+
+    private lateinit var btnToggleVisibility: ImageView
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_live_orders_admin)
 
         helper = FirestoreHelper()
+        btnToggleVisibility = findViewById(R.id.btnToggleVisibility)
 
+        //  Load saved preference (keeps the eye state consistent even if app restarts)
+        val sharedPref = getSharedPreferences("AdminPrefs", MODE_PRIVATE)
+        showCompletedOrders = sharedPref.getBoolean("showCompleted", true)
+        updateEyeIcon() // Set correct icon on launch
+
+        //  Navigation
         val btnManageMenu = findViewById<TextView>(R.id.btnManageMenu)
         btnManageMenu.setOnClickListener {
             val intent = Intent(this, ManageMenuAdminActivity::class.java)
@@ -28,66 +42,62 @@ class LiveOrdersAdminActivity : AppCompatActivity() {
             finish()
         }
 
-        // Inside LiveOrdersAdminActivity.kt
+        //  Eye Button Click Logic
+        btnToggleVisibility.setOnClickListener {
+            // Toggle the state
+            showCompletedOrders = !showCompletedOrders
 
-        val btnClear = findViewById<ImageView>(R.id.btnClearHistory)
+            // Save the state
+            sharedPref.edit().putBoolean("showCompleted", showCompletedOrders).apply()
 
-        btnClear.setOnClickListener {
-            AlertDialog.Builder(this)
-                .setTitle("Hide Completed Orders")
-                .setMessage("Do you want to hide all current completed orders from this view? (They will still stay in the database)")
-                .setPositiveButton("Hide") { _, _ ->
-                    val sharedPref = getSharedPreferences("AdminPrefs", MODE_PRIVATE)
-                    with(sharedPref.edit()) {
-                        putLong("hideOrdersBefore", System.currentTimeMillis())
-                        apply()
-                    }
-                    // The listener will automatically pick this up or you can call your fetch again
-                    refreshOrderList()
-                    Toast.makeText(this, "History Hidden", Toast.LENGTH_SHORT).show()
-                }
-                .setNegativeButton("Cancel", null)
-                .show()
+            // Update UI
+            updateEyeIcon()
+            applyFilterAndSort()
+
+            val message = if (showCompletedOrders) "Showing Completed Orders" else "Hidden Completed Orders"
+            Toast.makeText(this, message, Toast.LENGTH_SHORT).show()
         }
 
-        // 1. Setup RecyclerView
+        // Setup RecyclerView
         val rvOrders = findViewById<RecyclerView>(R.id.rvorders)
         rvOrders.layoutManager = LinearLayoutManager(this)
-
-        // 2. Initialize Adapter (Passing helper for the button clicks)
         adapter = AdminOrderAdapter(emptyList(), helper)
         rvOrders.adapter = adapter
 
-        // 3. Real-time Listener for Orders
+        //  Real-time Listener
         helper.observeOrders { allOrders ->
-
-
-            val sortedOrders = allOrders.sortedWith(compareBy<OrderModel> {
-                it.status == "Completed" // Boolean false (0) comes before true (1)
-            }.thenByDescending { it.timestamp })
-
-            adapter.updateList(sortedOrders)
+            // Save raw data
+            allFetchedOrders = allOrders
+            // Update the UI based on current filter settings
+            applyFilterAndSort()
         }
     }
 
-    private fun refreshOrderList() {
-        helper.observeOrders { allOrders ->
-            val sharedPref = getSharedPreferences("AdminPrefs", MODE_PRIVATE)
-            val hideBefore = sharedPref.getLong("hideOrdersBefore", 0L)
-
-            val filteredOrders = allOrders.filter { order ->
-                if (order.status == "Completed") {
-                    // Only show if it was completed AFTER the hide button was clicked
-                    order.timestamp > hideBefore
-                } else {
-                    // Always show Pending, Preparing, and Ready orders
-                    true
-                }
-            }.sortedWith(compareBy<OrderModel> {
-                it.status == "Completed"
-            }.thenByDescending { it.timestamp })
-
-            adapter.updateList(filteredOrders)
+    private fun updateEyeIcon() {
+        if (showCompletedOrders) {
+            // Open Eye Icon
+            btnToggleVisibility.setImageResource(R.drawable.baseline_visibility_24)
+        } else {
+            // Slashed Eye Icon
+            btnToggleVisibility.setImageResource(R.drawable.baseline_visibility_off_24)
         }
+    }
+
+    private fun applyFilterAndSort() {
+        // Filter
+        val filteredList = if (showCompletedOrders) {
+            allFetchedOrders // Show everything
+        } else {
+            // Only show orders that are NOT completed
+            allFetchedOrders.filter { it.status != "Completed" }
+        }
+
+       // sort the orders
+        val sortedList = filteredList.sortedWith(compareBy<OrderModel> {
+            it.status == "Completed" // Moves "Completed" to the bottom
+        }.thenByDescending { it.timestamp }) // Newest first
+
+        // Updates Adapter
+        adapter.updateList(sortedList)
     }
 }

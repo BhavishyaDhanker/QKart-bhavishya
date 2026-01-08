@@ -1,9 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    xmlns:tools="http://schemas.android.com/tools"
     android:background="#F8F9FA"
     android:id="@+id/main"
     tools:context=".AccountActivity">
@@ -49,8 +50,7 @@
         android:layout_margin="20dp"
         app:cardCornerRadius="12dp"
         app:cardElevation="8dp"
-        app:layout_constraintTop_toBottomOf="@id/profileHeader"
-        app:layout_constraintBottom_toTopOf="@id/bottomNavBar">
+        app:layout_constraintTop_toBottomOf="@id/profileHeader">
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -58,7 +58,17 @@
             android:orientation="vertical"
             android:padding="8dp">
 
-
+            <TextView
+                android:id="@+id/btnAccountEditProfile"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Edit Profile"
+                android:drawableStart="@drawable/baseline_person_24"
+                android:drawablePadding="16dp"
+                android:padding="16dp"
+                android:textSize="16sp"
+                android:gravity="center_vertical"
+                android:background="?attr/selectableItemBackground"/>
 
             <View android:layout_width="match_parent" android:layout_height="1dp" android:background="#EEEEEE"/>
 
@@ -93,70 +103,19 @@
         </LinearLayout>
     </androidx.cardview.widget.CardView>
 
-    <LinearLayout
-        android:id="@+id/bottomNavBar"
+    <com.google.android.material.bottomnavigation.BottomNavigationView
+        android:id="@+id/bottomNavigationView"
         android:layout_width="match_parent"
-        android:layout_height="65dp"
-        android:background="@color/maroon"
-        android:elevation="20dp"
-        android:weightSum="4"
-        app:layout_constraintBottom_toBottomOf="parent">
+        android:layout_height="wrap_content"
+        android:background="#800000"
 
-        <FrameLayout
-            android:id="@+id/cartContainer"
-            android:layout_width="0dp"
-            android:layout_height="match_parent"
-            android:layout_weight="1"
-            android:clipChildren="false"
-            android:clickable="true"
-            android:focusable="true"
-            android:background="?attr/selectableItemBackground"
-            >
+        app:labelVisibilityMode="labeled"
+        app:menu="@menu/bottom_nav_menu"
 
+        app:itemIconTint="@color/selector_bottom_nav"
+        app:itemTextColor="@color/selector_bottom_nav"
+        app:itemRippleColor="#33FFFFFF"
 
+        app:layout_constraintBottom_toBottomOf="parent" />
 
-            <ImageView
-                android:id="@+id/btnCart"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:layout_weight="1"
-                android:src="@drawable/ic_cart_24"
-                app:tint="@android:color/white"/>
-
-            <View
-                android:id="@+id/cartBadgeDot"
-                android:layout_width="10dp"
-                android:layout_height="10dp"
-                android:layout_gravity="top|end"
-                android:background="@drawable/bg_red_dot"
-                android:visibility="gone" />
-        </FrameLayout>
-
-        <ImageView
-            android:layout_width="0dp"
-            android:layout_height="match_parent"
-            android:layout_weight="1"
-            android:id="@+id/home"
-            app:tint="@color/off_white"
-            android:src="@drawable/home_12_dp"/>
-
-        <ImageView
-            android:layout_width="0dp"
-            android:layout_height="match_parent"
-            android:layout_weight="1"
-            android:id="@+id/OrderHistory"
-            app:tint="@color/off_white"
-            android:src="@drawable/shopping_cart_16_dp"/>
-
-        <ImageView
-            android:layout_width="0dp"
-            android:layout_height="match_parent"
-            android:layout_weight="1"
-            android:id="@+id/settings"
-            app:tint="@color/off_white"
-            android:src="@drawable/settings_16_dp"/>
-
-
-
-    </LinearLayout>
 </androidx.constraintlayout.widget.ConstraintLayout>

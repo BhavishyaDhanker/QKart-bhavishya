@@ -1,7 +1,28 @@
 <resources xmlns:tools="http://schemas.android.com/tools">
     <!-- Base application theme. -->
-    <style name="Base.Theme.QKart_bhavishya" parent="Theme.Material3.DayNight.NoActionBar">
-        <!-- Customize your dark theme here. -->
-        <!-- <item name="colorPrimary">@color/my_dark_primary</item> -->
+    <style name="Base.Theme.QKart_Bhavishya" parent="Theme.Material3.Light.NoActionBar">
+        <item name="colorPrimary">@color/maroon</item>
+        <item name="colorPrimaryVariant">@color/maroon</item>
+        <item name="colorOnPrimary">@color/white</item>
+
+        <item name="android:statusBarColor">?attr/colorPrimary</item>
     </style>
+
+    <style name="Theme.QKart_Bhavishya" parent="Base.Theme.QKart_Bhavishya" />
+
+    <style name="RoundedSquare">
+        <item name="cornerSize">12dp</item>
+    </style>
+    <style name="FoodTitleText">
+        <item name="android:fontFamily">@font/poppins_bold</item>
+        <item name="android:textSize">18sp</item>
+        <item name="android:textColor">#800000</item>
+    </style>
+
+    <style name="FoodDescriptionText">
+        <item name="android:fontFamily">@font/poppins_regular</item>
+        <item name="android:textSize">14sp</item>
+        <item name="android:textColor">#555555</item>
+    </style>
+
 </resources>

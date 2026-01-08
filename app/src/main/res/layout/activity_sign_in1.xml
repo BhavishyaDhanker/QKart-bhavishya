@@ -66,16 +66,9 @@
             />
     </com.google.android.material.textfield.TextInputLayout>
 
-    <TextView
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="Forgot Password?"
-        android:gravity="right"
-        android:textColor="#800000"
-        android:layout_margin="20dp"
-        />
     <androidx.cardview.widget.CardView
         android:layout_width="match_parent"
+        android:layout_marginTop="20dp"
         android:layout_marginHorizontal="60dp"
         android:layout_height="wrap_content"
         app:cardCornerRadius="7dp"

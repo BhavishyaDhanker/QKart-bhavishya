@@ -19,6 +19,8 @@ class AdminOrderAdapter(
         val tvTotal: TextView = view.findViewById(R.id.txtTotalAmount)
         val tvStatus: TextView = view.findViewById(R.id.txtStatus)
         val btnNext: Button = view.findViewById(R.id.btnNextStatus)
+
+        val tvPickup: TextView = view.findViewById(R.id.tvOrderPickupTime)
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): OrderViewHolder {
@@ -33,6 +35,11 @@ class AdminOrderAdapter(
         holder.tvUser.text = "${order.username} (${order.rollNo})"
         holder.tvTotal.text = "₹ ${order.totalAmount}"
         holder.tvStatus.text = order.status
+
+        // Binding the Pickup Time
+        val timeText = if (order.pickupTime.isNotEmpty()) order.pickupTime else "ASAP"
+        holder.tvPickup.text = "Pickup: $timeText"
+
 
         // Create the string of items from the list
         val itemSummary = order.items.joinToString { "${it.quantity}x ${it.name}" }
@@ -60,7 +67,7 @@ class AdminOrderAdapter(
             holder.btnNext.visibility = View.VISIBLE
             holder.btnNext.text = "Mark $nextStatus"
             holder.btnNext.setOnClickListener {
-                helper.updateOrderStatus(order.orderId, nextStatus) { success ->
+                helper.updateOrderStatus(order.orderId ?: "", nextStatus) { success ->
                     if (success) {
                         Toast.makeText(holder.itemView.context, "Order is now $nextStatus", Toast.LENGTH_SHORT).show()
                     } else {

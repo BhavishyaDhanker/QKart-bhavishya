@@ -4,17 +4,28 @@ object CartManager {
     // using mapOf because it creates a map like it links the item (CartItem) with a key (string)
     private val selectedItems = mutableMapOf<String, CartItem>()
 
+
+    // Returns the number of distinct items in the cart
+    fun getCartSize(): Int {
+        return selectedItems.size
+    }
+
     fun addItem(item: MenuItem) {
         val id = item.id ?: return
         val price = item.price.toDoubleOrNull() ?: 0.0
 
         if (selectedItems.containsKey(id)) {
-            // Item exists  increase quantity
+            // Item exists, increase quantity
             val existingItem = selectedItems[id]!!
             selectedItems[id] = existingItem.copy(quantity = existingItem.quantity + 1)
         } else {
-            // New item, add to map
-            selectedItems[id] = CartItem(id, item.name, "https://share.google/dka4pCVsUMVmyWXxa", 1, price= price)
+            selectedItems[id] = CartItem(
+                itemId = id,
+                name = item.name,
+                imageUrl = item.imageUrl, // This fetches the Cloudinary link from Firestore
+                quantity = 1,
+                price = price
+            )
         }
     }
 

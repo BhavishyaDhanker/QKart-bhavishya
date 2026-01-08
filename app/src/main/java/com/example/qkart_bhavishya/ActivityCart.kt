@@ -17,6 +17,7 @@ class ActivityCart : AppCompatActivity() {
     private lateinit var btnPlaceOrder: AppCompatButton
     private lateinit var tvEmptyCartMsg: LinearLayout
     private lateinit var cartAdapter: CartAdapter
+    private var selectedPickupTime: String = "ASAP"
     private val helper = FirestoreHelper()
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -40,6 +41,29 @@ class ActivityCart : AppCompatActivity() {
             } else {
                 Toast.makeText(this, "Add items to your cart first!", Toast.LENGTH_SHORT).show()
             }
+        }
+
+        val tvSelectedTime = findViewById<TextView>(R.id.tvSelectedTime)
+        val btnSelectTime = findViewById<TextView>(R.id.btnSelectTime)
+
+        btnSelectTime.setOnClickListener {
+            val cal = java.util.Calendar.getInstance()
+            val timeSetListener = android.app.TimePickerDialog.OnTimeSetListener { _, hour, minute ->
+                cal.set(java.util.Calendar.HOUR_OF_DAY, hour)
+                cal.set(java.util.Calendar.MINUTE, minute)
+
+                // Format time nicely
+                val sdf = java.text.SimpleDateFormat("hh:mm a", java.util.Locale.getDefault())
+                selectedPickupTime = sdf.format(cal.time)
+                tvSelectedTime.text = selectedPickupTime
+            }
+
+            android.app.TimePickerDialog(
+                this, timeSetListener,
+                cal.get(java.util.Calendar.HOUR_OF_DAY),
+                cal.get(java.util.Calendar.MINUTE),
+                false // 'false' for 12-hour format with AM/PM
+            ).show()
         }
     }
 
@@ -87,6 +111,7 @@ class ActivityCart : AppCompatActivity() {
             items = items,
             totalAmount = CartManager.getTotalPrice(),
             status = "Pending",
+            pickupTime = selectedPickupTime,
             timestamp = System.currentTimeMillis()
         )
 

@@ -19,6 +19,12 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.QKart_bhavishya">
         <activity
+            android:name=".AccountActivity"
+            android:exported="false" />
+        <activity
+            android:name=".EditProfileActivity"
+            android:exported="false" />
+        <activity
             android:name=".OrderHistoryActivity"
             android:exported="false" />
         <activity

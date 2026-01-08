@@ -60,6 +60,13 @@ class SettingsActivity : AppCompatActivity() {
                 val alertDialog = builder.create()
                 alertDialog.show()
             }
+
+        val btnEditProfile = findViewById<TextView>(R.id.setEditProfile)
+        btnEditProfile.setOnClickListener {
+            val editProfileIntent = Intent(this , EditProfileActivity::class.java)
+            startActivity(editProfileIntent)
+            finish()
+        }
     }
 
     private fun performLogout() {

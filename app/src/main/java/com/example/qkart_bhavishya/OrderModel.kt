@@ -8,7 +8,7 @@ data class OrderModel(
     val totalAmount: Double = 0.0,
     val status: String = "Pending",
     val timestamp: Long = System.currentTimeMillis(),
-    val pickupTime: String = ""
+    val pickupTime: String = "As soon as possible"
 )
 
 data class CartItem(

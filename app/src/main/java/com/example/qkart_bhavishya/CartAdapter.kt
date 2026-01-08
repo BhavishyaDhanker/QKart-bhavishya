@@ -1,63 +1,42 @@
 package com.example.qkart_bhavishya
 
-import android.view.LayoutInflater
-import android.view.View
-import android.view.ViewGroup
+import android.view.*
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
+import com.bumptech.glide.Glide
+import com.google.android.material.imageview.ShapeableImageView
 
-class CartAdapter(private var cartList: List<CartItem>,
-                  private val onCartChanged: () -> Unit) :
+class CartAdapter(private var cartList: List<CartItem>, private val onCartChanged: () -> Unit) :
     RecyclerView.Adapter<CartAdapter.CartViewHolder>() {
 
     class CartViewHolder(view: View) : RecyclerView.ViewHolder(view) {
-        val tvName: TextView = view.findViewById(R.id.tvCartItemName)
-        val tvQty: TextView = view.findViewById(R.id.tvCartItemQty)
-        val tvPrice: TextView = view.findViewById(R.id.tvCartItemPrice)
-        val btnPlus: TextView = view.findViewById(R.id.btnPlus)
-        val btnMinus: TextView = view.findViewById(R.id.btnMinus)
-        val tvQtyValue: TextView = view.findViewById(R.id.tvCartItemQtyValue)
-    }
-
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): CartViewHolder {
-        val view = LayoutInflater.from(parent.context)
-            .inflate(R.layout.item_cart, parent, false)
-        return CartViewHolder(view)
+        val tvName = view.findViewById<TextView>(R.id.tvCartItemName)
+        val tvPrice = view.findViewById<TextView>(R.id.tvCartItemPrice)
+        val tvQtyValue = view.findViewById<TextView>(R.id.tvCartItemQtyValue)
+        val ivCartImage = view.findViewById<ShapeableImageView>(R.id.imgCartItem)
+        val btnPlus = view.findViewById<TextView>(R.id.btnPlus)
+        val btnMinus = view.findViewById<TextView>(R.id.btnMinus)
     }
 
     override fun onBindViewHolder(holder: CartViewHolder, position: Int) {
         val item = cartList[position]
-
         holder.tvName.text = item.name
-        holder.tvQty.text = "x${item.quantity}"
+        holder.tvPrice.text = "₹${item.price * item.quantity}"
         holder.tvQtyValue.text = item.quantity.toString()
 
-        // Calculate subtotal for this item row
-        val subTotal = item.price * item.quantity
-        holder.tvPrice.text = "₹ $subTotal"
+        Glide.with(holder.itemView.context)
+            .load(item.imageUrl)
+            .placeholder(R.drawable.burger)
+            .into(holder.ivCartImage)
 
-        holder.btnPlus.setOnClickListener {
-            CartManager.incrementItem(item.itemId)
-            notifyItemChanged(position)
-            onCartChanged() // A callback to update the Total Price in Activity
-        }
-
-        holder.btnMinus.setOnClickListener {
-            CartManager.decrementItem(item.itemId)
-            if (item.quantity <= 1) {
-                // If it was the last one, it gets removed from the list
-                notifyDataSetChanged()
-            } else {
-                notifyItemChanged(position)
-            }
-            onCartChanged()
-        }
+        holder.btnPlus.setOnClickListener { CartManager.incrementItem(item.itemId); onCartChanged() }
+        holder.btnMinus.setOnClickListener { CartManager.decrementItem(item.itemId); onCartChanged() }
     }
+
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int) = CartViewHolder(
+        LayoutInflater.from(parent.context).inflate(R.layout.item_cart, parent, false)
+    )
 
     override fun getItemCount() = cartList.size
-
-    fun updateData(newList: List<CartItem>) {
-        this.cartList = newList
-        notifyDataSetChanged()
-    }
+    fun updateData(newList: List<CartItem>) { cartList = newList; notifyDataSetChanged() }
 }

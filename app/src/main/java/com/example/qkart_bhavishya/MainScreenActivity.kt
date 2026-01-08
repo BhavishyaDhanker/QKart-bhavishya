@@ -44,9 +44,13 @@ class MainScreenActivity : AppCompatActivity() {
             filterMenu("All")
         }
 
+
+
         // Navigation
         findViewById<ImageView>(R.id.btnCart).setOnClickListener { startActivity(Intent(this, ActivityCart::class.java)) }
         findViewById<ImageView>(R.id.OrderHistory).setOnClickListener { startActivity(Intent(this, OrderHistoryActivity::class.java)) }
+        findViewById<ImageView>(R.id.settings).setOnClickListener { startActivity(Intent(this,
+            SettingsActivity::class.java)) }
     }
 
     private fun filterMenu(category: String) {

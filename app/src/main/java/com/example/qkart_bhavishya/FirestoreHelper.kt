@@ -3,6 +3,7 @@ package com.example.qkart_bhavishya
 import com.example.wocq_kart.User
 import com.example.qkart_bhavishya.MenuItem
 import com.example.qkart_bhavishya.OrderModel
+import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.firestore.Query
 import com.google.firebase.firestore.toObjects
@@ -78,5 +79,31 @@ class FirestoreHelper {
             .addOnFailureListener { onComplete(false) }
     }
 
+
+    fun updateUserProfile(name: String, phone: String, callback: (Boolean) -> Unit) {
+        // getting current user's id from firebase auth
+        val userId = FirebaseAuth.getInstance().currentUser?.uid
+
+        if (userId == null) {
+            callback(false)
+            return
+        }
+
+        val updates = mapOf(
+            "name" to name,
+            "phone" to phone
+        )
+
+        // Updates the document with ID == userId
+        db.collection("users").document(userId)
+            .update(updates)
+            .addOnSuccessListener {
+                callback(true)
+            }
+            .addOnFailureListener { e ->
+                android.util.Log.e("FIRESTORE", "Error updating profile", e)
+                callback(false)
+            }
+    }
 
 }

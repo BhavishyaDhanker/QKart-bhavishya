@@ -49,16 +49,16 @@ class OrderHistoryActivity : AppCompatActivity() {
             when (item.itemId) {
                 R.id.nav_home -> {
                     startActivity(Intent(this, MainScreenActivity::class.java))
-                    finish() // Close history so we don't stack
+                    finish()
                     true
                 }
                 R.id.nav_cart -> {
                     startActivity(Intent(this, ActivityCart::class.java))
-                    // Do not finish() if you want to allow back press to return here
+
                     true
                 }
                 R.id.nav_history -> {
-                    // Already here
+
                     true
                 }
                 R.id.nav_account -> {

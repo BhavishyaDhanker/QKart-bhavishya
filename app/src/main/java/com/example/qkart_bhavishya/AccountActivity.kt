@@ -27,7 +27,6 @@ class AccountActivity : AppCompatActivity() {
 
         // 1. Setup Card Buttons
 
-        // NEW: Edit Profile Listener
         findViewById<TextView>(R.id.btnAccountEditProfile).setOnClickListener {
             startActivity(Intent(this, EditProfileActivity::class.java))
         }
@@ -40,10 +39,9 @@ class AccountActivity : AppCompatActivity() {
             showLogoutDialog()
         }
 
-        // 2. Setup Bottom Nav
+
         setupBottomNav()
 
-        // 3. Initialize Badge
         updateCartBadge()
     }
 

@@ -4,7 +4,6 @@ import android.content.Context
 import android.os.Bundle
 import android.widget.Button
 import android.widget.EditText
-import android.widget.TextView
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 
@@ -12,7 +11,7 @@ class EditProfileActivity : AppCompatActivity() {
 
     private lateinit var etName: EditText
     private lateinit var etPhone: EditText
-    private lateinit var etRollNo: EditText // This will be read-only
+    private lateinit var etRollNo: EditText
     private lateinit var btnSave: Button
     private lateinit var helper: FirestoreHelper
 
@@ -23,13 +22,12 @@ class EditProfileActivity : AppCompatActivity() {
         helper = FirestoreHelper()
         val sharedPref = getSharedPreferences("UserPrefs", Context.MODE_PRIVATE)
 
-
         etName = findViewById(R.id.etEditName)
         etPhone = findViewById(R.id.etEditPhone)
         etRollNo = findViewById(R.id.etEditRollNo)
         btnSave = findViewById(R.id.btnSaveProfile)
 
-        // Loading current data from Local Storage for the user to see
+        // Load current data
         val currentName = sharedPref.getString("userName", "") ?: ""
         val currentPhone = sharedPref.getString("userPhone", "") ?: ""
         val currentRoll = sharedPref.getString("rollNo", "") ?: ""
@@ -46,11 +44,21 @@ class EditProfileActivity : AppCompatActivity() {
             val newName = etName.text.toString().trim()
             val newPhone = etPhone.text.toString().trim()
 
-            if (newName.isNotEmpty() && newPhone.isNotEmpty()) {
-                saveChanges(newName, newPhone)
-            } else {
+            //  Basic Empty Check
+            if (newName.isEmpty() || newPhone.isEmpty()) {
                 Toast.makeText(this, "Please fill all fields", Toast.LENGTH_SHORT).show()
+                return@setOnClickListener
             }
+
+            // Phone Number Validation
+            if (newPhone.length != 10) {
+                etPhone.error = "Phone number must be exactly 10 digits"
+                etPhone.requestFocus() // Focus back to the field so user can fix it
+                return@setOnClickListener
+            }
+
+
+            saveChanges(newName, newPhone)
         }
     }
 
@@ -60,11 +68,10 @@ class EditProfileActivity : AppCompatActivity() {
         pd.setCancelable(false)
         pd.show()
 
-        // Calls the helper function
         helper.updateUserProfile(name, phone) { success ->
             pd.dismiss()
             if (success) {
-                // If Cloud update worked, update Local Storage too
+                // Update Local Storage
                 val sharedPref = getSharedPreferences("UserPrefs", Context.MODE_PRIVATE)
                 with(sharedPref.edit()) {
                     putString("userName", name)
@@ -73,7 +80,7 @@ class EditProfileActivity : AppCompatActivity() {
                 }
 
                 Toast.makeText(this, "Profile Updated!", Toast.LENGTH_SHORT).show()
-                finish() // Close activity and go back
+                finish()
             } else {
                 Toast.makeText(this, "Update Failed. Check internet.", Toast.LENGTH_SHORT).show()
             }

@@ -11,7 +11,7 @@ import com.google.firebase.firestore.FirebaseFirestore
 
 class SignIn1Activity : AppCompatActivity() {
 
-    // 1. Declare Firebase Auth and Firestore
+
     private lateinit var auth: FirebaseAuth
     private lateinit var db: FirebaseFirestore
 
@@ -73,7 +73,7 @@ class SignIn1Activity : AppCompatActivity() {
     }
 
     private fun fetchUserData(userId: String) {
-        // 4. Retrieve profile data from Firestore using UID
+        //  Retrieve profile data from Firestore using UID
         db.collection("users").document(userId).get()
             .addOnSuccessListener { document ->
                 if (document.exists()) {
@@ -89,7 +89,7 @@ class SignIn1Activity : AppCompatActivity() {
                         apply()
                     }
 
-                    // 5. Role-based Redirection
+
                     if (role == "admin") {
                         val intentLiveOrders = Intent(this, LiveOrdersAdminActivity::class.java)
                         intent.putExtra(Key1, name)

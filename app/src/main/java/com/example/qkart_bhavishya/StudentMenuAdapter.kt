@@ -15,6 +15,7 @@ class StudentMenuAdapter(private var menuList: List<MenuItem>, private val onAdd
         val ivFood = view.findViewById<ShapeableImageView>(R.id.food_image)
         val btnAdd = view.findViewById<View>(R.id.add_btn_text)
         val soldOutOverlay = view.findViewById<View>(R.id.soldOutOverlay)
+        val tvDescription = view.findViewById<TextView>(R.id.food_description)
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): StudentViewHolder {
@@ -26,6 +27,7 @@ class StudentMenuAdapter(private var menuList: List<MenuItem>, private val onAdd
         val item = menuList[position]
         holder.tvName.text = item.name
         holder.tvPrice.text = "₹${item.price}"
+        holder.tvDescription.text = item.description
 
         Glide.with(holder.itemView.context)
             .load(item.imageUrl)

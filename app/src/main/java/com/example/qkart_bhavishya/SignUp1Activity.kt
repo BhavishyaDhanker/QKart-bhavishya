@@ -70,13 +70,13 @@ class SignUp1Activity : AppCompatActivity() {
     }
 
     private fun registerUser(email: String, pass: String, name: String, rollNo: String) {
-        // 1. Create the user in Firebase Auth
+        //  Create the user in Firebase Auth
         auth.createUserWithEmailAndPassword(email, pass)
             .addOnCompleteListener { task ->
                 if (task.isSuccessful) {
                     val userId = auth.currentUser?.uid
 
-                    // 2. Prepare user profile data
+
                     val userMap = hashMapOf(
                         "uid" to userId,
                         "name" to name,
@@ -86,7 +86,7 @@ class SignUp1Activity : AppCompatActivity() {
                         "createdAt" to System.currentTimeMillis()
                     )
 
-                    // 3. Save to Firestore
+                    // Save to Firestore
                     if (userId != null) {
                         db.collection("users").document(userId)
                             .set(userMap, SetOptions.merge())

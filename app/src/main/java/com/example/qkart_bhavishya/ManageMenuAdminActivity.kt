@@ -85,7 +85,7 @@ class ManageMenuAdminActivity : AppCompatActivity() {
 
     private fun uploadToCloudinary(name: String, price: String, desc: String, cat: String) {
         val pd = android.app.ProgressDialog(this).apply { setMessage("Uploading..."); show() }
-
+// image uploading
         MediaManager.get().upload(imageUri).unsigned("QKart_bhavishya")  // preset name
             .callback(object : UploadCallback {
                 override fun onStart(requestId: String) {}

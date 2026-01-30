@@ -18,17 +18,13 @@
         android:roundIcon="@drawable/q_kart"
         android:supportsRtl="true"
         android:theme="@style/Theme.QKart_Bhavishya">
+
         <activity
-            android:name=".AccountActivity"
+            android:name=".MainActivity"
             android:exported="false" />
+
         <activity
             android:name=".EditProfileActivity"
-            android:exported="false" />
-        <activity
-            android:name=".OrderHistoryActivity"
-            android:exported="false" />
-        <activity
-            android:name=".ActivityCart"
             android:exported="false" />
         <activity
             android:name=".ManageMenuAdminActivity"
@@ -37,20 +33,18 @@
             android:name=".LiveOrdersAdminActivity"
             android:exported="false" />
         <activity
+            android:name=".SignIn1Activity"
+            android:exported="false" />
+
+        <activity
             android:name=".SignUp1Activity"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
-
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity
-            android:name=".SignIn1Activity"
-            android:exported="false" />
-        <activity
-            android:name=".MainScreenActivity"
-            android:exported="false" />
+
     </application>
 
 </manifest>

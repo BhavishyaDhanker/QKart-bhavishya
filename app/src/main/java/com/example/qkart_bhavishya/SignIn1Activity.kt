@@ -58,7 +58,7 @@ class SignIn1Activity : AppCompatActivity() {
     }
 
     private fun loginUser(email: String, pass: String) {
-        // 3. Authenticate with Firebase Auth
+        //  Authenticate with Firebase Auth
         auth.signInWithEmailAndPassword(email, pass)
             .addOnCompleteListener { task ->
                 if (task.isSuccessful) {
@@ -96,7 +96,7 @@ class SignIn1Activity : AppCompatActivity() {
                         intent.putExtra(Key2, rollNo)
                         startActivity(intentLiveOrders)
                     } else {
-                        val intentMainScreen = Intent(this, MainScreenActivity::class.java)
+                        val intentMainScreen = Intent(this, MainActivity::class.java)
                         intent.putExtra(Key1, name)
                         intent.putExtra(Key2, rollNo)
                         startActivity(intentMainScreen)

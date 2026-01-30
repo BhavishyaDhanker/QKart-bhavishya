@@ -33,7 +33,7 @@ class SignUp1Activity : AppCompatActivity() {
                 val intent = if (role == "admin") {
                     Intent(this, LiveOrdersAdminActivity::class.java)
                 } else {
-                    Intent(this, MainScreenActivity::class.java)
+                    Intent(this, MainActivity::class.java)
                 }
                 startActivity(intent)
                 finish()
@@ -94,7 +94,7 @@ class SignUp1Activity : AppCompatActivity() {
                                 Toast.makeText(this, "Welcome, $name!", Toast.LENGTH_SHORT).show()
 
                                 // Navigate to Main Screen
-                                val intent = Intent(this, MainScreenActivity::class.java)
+                                val intent = Intent(this, MainActivity::class.java)
                                 startActivity(intent)
                                 finish()
                             }

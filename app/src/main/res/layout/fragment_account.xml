@@ -6,8 +6,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="#F8F9FA"
-    android:id="@+id/main"
-    tools:context=".AccountActivity">
+    tools:context=".AccountFragment">
 
     <LinearLayout
         android:id="@+id/profileHeader"
@@ -63,11 +62,11 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="Edit Profile"
-                android:drawableStart="@drawable/baseline_person_24"
-                android:drawablePadding="16dp"
                 android:padding="16dp"
                 android:textSize="16sp"
                 android:gravity="center_vertical"
+                android:drawableStart="@drawable/baseline_person_24"
+                android:drawablePadding="16dp"
                 android:background="?attr/selectableItemBackground"/>
 
             <View android:layout_width="match_parent" android:layout_height="1dp" android:background="#EEEEEE"/>
@@ -77,11 +76,11 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="Order History"
-                android:drawableStart="@drawable/shopping_cart_16_dp"
-                android:drawablePadding="16dp"
                 android:padding="16dp"
                 android:textSize="16sp"
                 android:gravity="center_vertical"
+                android:drawableStart="@drawable/shopping_cart_16_dp"
+                android:drawablePadding="16dp"
                 android:background="?attr/selectableItemBackground"/>
 
             <View android:layout_width="match_parent" android:layout_height="1dp" android:background="#EEEEEE"/>
@@ -92,30 +91,14 @@
                 android:layout_height="wrap_content"
                 android:text="Log Out"
                 android:textColor="#D32F2F"
-                android:drawableStart="@drawable/outline_exit_24"
-                android:drawableTint="#D32F2F"
-                android:drawablePadding="16dp"
                 android:padding="16dp"
                 android:textSize="16sp"
                 android:gravity="center_vertical"
+                android:drawableStart="@drawable/outline_exit_24"
+                android:drawableTint="#D32F2F"
+                android:drawablePadding="16dp"
                 android:background="?attr/selectableItemBackground"/>
 
         </LinearLayout>
     </androidx.cardview.widget.CardView>
-
-    <com.google.android.material.bottomnavigation.BottomNavigationView
-        android:id="@+id/bottomNavigationView"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:background="#800000"
-
-        app:labelVisibilityMode="labeled"
-        app:menu="@menu/bottom_nav_menu"
-
-        app:itemIconTint="@color/selector_bottom_nav"
-        app:itemTextColor="@color/selector_bottom_nav"
-        app:itemRippleColor="#33FFFFFF"
-
-        app:layout_constraintBottom_toBottomOf="parent" />
-
 </androidx.constraintlayout.widget.ConstraintLayout>
